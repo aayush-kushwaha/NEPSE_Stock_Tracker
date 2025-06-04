@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 
@@ -14,7 +17,12 @@ stock_name = input("Enter stock name: ")
 stock_name = stock_name.lower()
 url = f'https://www.sharesansar.com/company/{stock_name}'
 driver.get(url)
-time.sleep(5)  # wait for JavaScript to render the page
+try:
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Volume:')]"))
+    )
+except:
+    raise Exception(f"Stock data not found or timeout occured: {stock_name}")
 
 # Parse page content
 soup = BeautifulSoup(driver.page_source, 'html.parser')
