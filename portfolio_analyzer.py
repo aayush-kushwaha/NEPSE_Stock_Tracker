@@ -7,25 +7,7 @@ import numpy as np
 import re
 
 # Step 1: Load fixed stock purchase data
-data = [
-    ["CHDC", "Investment", "IPO", None, 100, 10, 2, 12, 9500],
-    ["UAIL", "Merged", "IPO + Secondary Market", None, 950, 9, 0, 9, 9500],
-    ["GBIME", "CommercialBank", "Secondary Market", "27-07-2021", 489, 10, 2, 12, 4890],
-    ["NIFRA", "Investment", "Secondary Market", "27-07-2021", 483, 10, 0, 10, 4830],
-    ["EBL", "CommercialBank", "Secondary Market", "05-08-2021", 766.2, 10, 4, 14, 7662],
-    ["RADHI", "Hydropower", "Secondary Market", "05-08-2021", 956.2, 10, 0, 10, 9562],
-    ["CHCL", "Hydropower", "Secondary Market", "05-08-2021", 720, 10, 3, 13, 7200],
-    ["JBBL", "Development Bank", "Secondary Market", "05-08-2021", 499, 10, 1, 11, 4990],
-    ["JBBL", "Development Bank", "Secondary Market", "06-04-2025", 327, 10, 0, 10, 3270],
-    ["PMLI", "Life Insurance", "Secondary Market", "08-08-2021", 775.5, 20, 4, 24, 15510],
-    ["NABIL", "CommercialBank", "Secondary Market", "09-08-2021", 1414, 20, 11, 31, 28280],
-    ["PCBL", "CommercialBank", "Secondary Market", "09-08-2021", 488.7, 10, 1, 11, 4887],
-]
-
-columns = ["Stock", "Sector", "Source", "Date", "Purchase Rate", "Purchased Shares", "Bonus Shares",
-           "Total Shares", "Total Purchase Value"]
-
-df = pd.DataFrame(data, columns=columns)
+df = pd.read_csv("portfolio.csv")
 df["LTP"] = np.nan
 df["Total Value"] = np.nan
 df["Profit/Loss"] = np.nan
