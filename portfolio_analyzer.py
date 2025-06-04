@@ -1,7 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
-import time
 import pandas as pd
 import numpy as np
 import re
@@ -22,13 +24,18 @@ driver = webdriver.Chrome(options=options)
 
 # Step 3: Fetch LTP for each eligible stock (only Secondary Market)
 for index, row in df.iterrows():
-    # if row["Source"] == "IPO":
-    #     continue  # Skip IPO
-
     stock_name = row["Stock"].lower()
     url = f'https://www.sharesansar.com/company/{stock_name}'
     driver.get(url)
-    time.sleep(5)  # wait for JS to render
+
+    # Wait until the "Volume:" label is present
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Volume:')]"))
+        )
+    except:
+        print(f"[{row['Stock']}] Volume label not found or timeout.")
+        continue
 
     # Parse page content
     soup = BeautifulSoup(driver.page_source, 'html.parser')
