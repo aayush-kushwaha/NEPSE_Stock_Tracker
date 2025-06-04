@@ -70,7 +70,3 @@ A smart, customizable stock portfolio tracker that automates LTP monitoring, cal
 - Export portfolio snapshots to Excel
 - Multi-user dashboard view
 - Telegram/Email alert bots
-- Mobile app (Flutter/PWA)
-
----
-
